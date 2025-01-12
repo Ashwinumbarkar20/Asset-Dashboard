@@ -66,10 +66,7 @@ function App() {
         <div className="card_innercontainer">
           {" "}
           <Card text={"Available"} value={allData?.status_distribution?.available}/>
-          <div className="card">
-            <p>Available</p>
-            <p>{allData?.status_distribution?.available}</p>
-          </div>
+          
           <div className="card">
             <p>In Use</p>
             <p>{allData?.status_distribution?.in_use}</p>{" "}
