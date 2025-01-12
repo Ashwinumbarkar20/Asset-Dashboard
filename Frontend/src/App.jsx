@@ -100,6 +100,18 @@ function App() {
             <p>{allData?.status_distribution?.recycle}</p>
           </div>
           <div className="card">
+            <p>Retired</p>
+            <p>{allData?.status_distribution?.recycle}</p>
+          </div>
+          <div className="card">
+            <p>Retired</p>
+            <p>{allData?.status_distribution?.recycle}</p>
+          </div>
+          <div className="card">
+            <p>Retired</p>
+            <p>{allData?.status_distribution?.recycle}</p>
+          </div>
+          <div className="card">
             <p>Delivered</p>
             <p>{allData?.status_distribution?.delivered}</p>
           </div>
