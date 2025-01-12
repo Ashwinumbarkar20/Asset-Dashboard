@@ -1,6 +1,9 @@
 const express =require('express')
 const cors=require('cors')
+const dotenv=require('dotenv')
+app.use(dotenv.config())
 const app=express();
+
 const mongoose=require('mongoose')
 const assetRouter=require('./assetData.router');
 app.use(cors())
@@ -9,6 +12,6 @@ app.listen(3000,()=>{
     console.log("Server stared at", 3000)
 })
 
-mongoose.connect("mongodb+srv://ashwinumbarkar:Rama2018@hcdata.pbrv6.mongodb.net/AssetTable?retryWrites=true&w=majority&appName=HCData").
+mongoose.connect(process.env.URI).
 then(()=>{console.log("DB connected")}).catch((e)=>{console.log("DB not connected")})
 app.use("/api/assets",assetRouter)
