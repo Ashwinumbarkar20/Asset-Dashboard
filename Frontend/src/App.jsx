@@ -65,6 +65,7 @@ function App() {
 <h2>Status-Wise</h2>
         <div className="card_innercontainer">
           {" "}
+          <Card text={"Available"} value={allData?.status_distribution?.available}/>
           <div className="card">
             <p>Available</p>
             <p>{allData?.status_distribution?.available}</p>
