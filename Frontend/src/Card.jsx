@@ -9,6 +9,8 @@ export default function Card({text,value}) {
       <p>{value}</p>
       <p>{value}</p>
       <p>{value}</p>
+      <p>{value}</p>
+      <p>{value}</p>
 
     </div>
     
