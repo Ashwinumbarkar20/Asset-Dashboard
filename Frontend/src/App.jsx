@@ -5,8 +5,12 @@ import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
 
 function App() {
   const [allData, setAllData] = useState({});
-  const [assets, allAssets] = useState([]);
+  const [assets, setAllAssets] = useState([]);
+  const [order,setorder]=useState("asc")
+  const [sortfield,seSortField]=useState(null)
   const [isLoding, setLoading] = useState(false);
+
+
 
   const getAllData = async () => {
     try {
@@ -18,16 +22,18 @@ function App() {
       console.log(e);
     }
   };
+
   const allassetData = async () => {
     try {
       const res = await fetch("http://localhost:3000/api/assets/Allassets");
       const allassetes = await res.json();
 
-      allAssets(allassetes.data);
+      setAllAssets(allassetes.data);
     } catch (e) {
       console.log(e);
     }
   };
+
   useEffect(() => {
     getAllData();
     allassetData();
@@ -38,8 +44,25 @@ function App() {
 
     return () => clearInterval(interval); 
   }, []);
-
   
+  const hadnleSort=(field)=>{
+    const order= sortfield === field && order==="asc" ? "desc":"asc"
+    seSortField(field)
+    setorder(order)
+    
+const sorted=[...assets].sort((a,b)=>{
+  if(order==="asc")
+  {
+return(a[field]>b[field]?1:-1)
+  }
+  else{
+    return(a[field]<b[field]?1:-1)
+  }
+})
+    
+setAllAssets(sorted)
+  }
+
   return (
     <>
       <h1 style={{ textAlign: "center", marginTop: "20px" }}>
@@ -56,7 +79,7 @@ function App() {
         </div>
         <ResponsiveContainer width="400px" height="400px">
         
-        <PieChart width={400} height={400}>
+        <PieChart width={200} height={200}>
           
           <Pie data={allData.summary} dataKey="value" cx="50%" cy="50%" outerRadius={60} fill="#8884d8" />
           
@@ -71,46 +94,13 @@ function App() {
             <p>In Use</p>
             <p>{allData?.status_distribution?.in_use}</p>{" "}
           </div>
-          <div className="card">
-            <p>In Use</p>
-            <p>{allData?.status_distribution?.in_use}</p>{" "}
-          </div>
-          <div className="card">
-            <p>In Use</p>
-            <p>{allData?.status_distribution?.in_use}</p>{" "}
-          </div>
-          <div className="card">
-            <p>In Use</p>
-            <p>{allData?.status_distribution?.in_use}</p>{" "}
-          </div>
-          <div className="card">
-            <p>In Use</p>
-            <p>{allData?.status_distribution?.in_use}</p>{" "}
-          </div>
-          <div className="card">
-            <p>In Use</p>
-            <p>{allData?.status_distribution?.in_use}</p>{" "}
-          </div>
-          <div className="card">
-            <p>In Use</p>
-            <p>{allData?.status_distribution?.in_use}</p>{" "}
-          </div>
+        
+       
           <div className="card">
             <p>Retired</p>
             <p>{allData?.status_distribution?.recycle}</p>
           </div>
-          <div className="card">
-            <p>Retired</p>
-            <p>{allData?.status_distribution?.recycle}</p>
-          </div>
-          <div className="card">
-            <p>Retired</p>
-            <p>{allData?.status_distribution?.recycle}</p>
-          </div>
-          <div className="card">
-            <p>Retired</p>
-            <p>{allData?.status_distribution?.recycle}</p>
-          </div>
+        
           <div className="card">
             <p>Delivered</p>
             <p>{allData?.status_distribution?.delivered}</p>
@@ -150,8 +140,6 @@ function App() {
         </div>
       </div>
 
-
-
       <div className="Table_container">
         <h2 style={{padding:"50px",textAlign:"center",color:"white"}}>List of All Assets</h2>
 {isLoding?<p>Loading..</p>:(<div>
@@ -159,12 +147,12 @@ function App() {
             <table className="Table_container">
               <thead>
                 <tr>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Manufacturer</th>
-                  <th>Assigned To</th>
-                  <th>Purchase Date</th>
-                  <th>warranty ends </th>
+                  <th onClick={()=>{hadnleSort("type")}} >Type</th>
+                  <th onClick={()=>{hadnleSort("status")}} >Status</th>
+                  <th onClick={()=>{hadnleSort("manufacturer")}}>Manufacturer</th>
+                  <th onClick={()=>{hadnleSort("assigned_to")}}>Assigned To</th>
+                  <th onClick={()=>{hadnleSort("purchase_date")}}>Purchase Date</th>
+                  <th onClick={()=>{hadnleSort("warranty_end_date")}}>warranty ends </th>
                 </tr>
               </thead>
               <tbody>
